@@ -1,0 +1,183 @@
+\documentclass{beamer}
+\usefonttheme{professionalfonts}  % serif math
+\setbeamertemplate{frametitle continuation}{} %{(\insertcontinuationcount)}
+
+\iffalse
+\usepackage{pgfpages}
+\setbeameroption{show notes}
+\setbeameroption{show notes on second screen=right}
+% pdfpc slajdovi.pdf --notes=right
+\fi
+
+\usepackage[scaled]{beramono}				% sans-serif monospace
+\input{imports/font}
+%\input{imports/text}
+%%text%%
+\iftrue
+	\raggedright						% bez desnog poravnavanja
+	\raggedbottom
+	\usepackage{caption}
+	\captionsetup{%
+		justification=raggedright,
+	}
+	\usepackage{etoolbox}
+	\makeatletter
+	\patchcmd{\@dottedtocline}
+	{\rightskip\@tocrmarg}
+	{\rightskip\@tocrmarg plus 4em \hyphenpenalty\@M}
+	{}{}
+	\makeatother
+	\setlength{\parindent}{1em}	 % uvlačenje ulomaka
+	\usepackage{indentfirst}	 % uvlačenje prvog ulomka
+	\setlength{\parskip}{0.5em}	 % razmak između ulomaka
+	
+	\usepackage[multiple, bottom]{footmisc}	 % višestruke fusnote, poslije slika/tablica
+	
+	\renewcommand*{\UrlFont}{\footnotesize}
+	
+	% colors	
+	\iffalse
+	\usepackage{xcolor}
+	\usepackage{color}
+	\hypersetup{
+		colorlinks,
+		linkcolor={blue!60!green!50!black},  % xcolor package
+		citecolor={green!40!black},
+		urlcolor={blue!75!green!30!black}
+	}
+	\definecolor{bluekeywords}{rgb}{0.13,0.13,1}  % color package
+	\definecolor{greencomments}{rgb}{0,0.5,0}
+	\definecolor{redstrings}{rgb}{0.9,0,0}
+	\fi
+	
+	\DeclareTextFontCommand{\textbf}{\bfseries}
+\fi
+%%%%%%%%
+\input{imports/math}
+\input{imports/tables}
+\input{imports/figures}
+
+%\usepackage{natbib}
+\usepackage[numbers]{natbib}
+\renewcommand*{\bibfont}{\scriptsize}
+
+\iftrue
+\usepackage[croatian]{babel}
+\usepackage[utf8x]{inputenc}	
+\fi
+
+\mode<presentation>
+{
+	\usetheme{Boadilla}      % or try Darmstadt, Madrid, Warsaw, ...
+	\usecolortheme{orchid} % or try albatross, beaver, crane, ...
+	\usefonttheme{structurebold}  % or try default, serif, structurebold, ...
+	\setbeamertemplate{navigation symbols}{}
+	\setbeamertemplate{caption}[numbered]
+}
+\setbeamercolor{structure}{fg=blue!75!green!80!black}	
+
+%\setbeamertemplate{itemize items}[default]
+%\setbeamertemplate{enumerate items}[default]
+\setbeamertemplate{section in toc}[circle]
+\setbeamertemplate{subsection in toc}[circle]
+\setbeamertemplate{items}[circle]
+\setbeamertemplate{blocks}[default]
+\setbeamertemplate{footline}
+{
+	\leavevmode%
+	\hbox{%
+		\begin{beamercolorbox}[wd=.15\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+			%\usebeamerfont{author in head/foot}\insertshortauthor
+		\end{beamercolorbox}%
+		\begin{beamercolorbox}[wd=.7\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+			\usebeamerfont{title in head/foot}\insertshorttitle  %\hspace*{3em}
+		\end{beamercolorbox}%
+		\begin{beamercolorbox}[wd=.15\paperwidth,ht=2.25ex,dp=1ex,right]{author in head/foot}%
+			\insertframenumber{} / \inserttotalframenumber\hspace*{1ex}
+		\end{beamercolorbox}
+	}%
+	\vskip0pt%
+}
+
+\iftrue
+\AtBeginSection[]
+{
+	\begin{frame}<beamer>
+		\frametitle{Content}
+		\tableofcontents[currentsection]
+	\end{frame}
+}
+\fi
+
+
+\title{Interplay of adversarial robustness and generalization in deep convolutional models}
+\author{Ivan Grubišić \newline \emph{Mentor:} Siniša Šegvić}
+\institute{Faculty of Electrical Engineering and Computing}
+\date{}
+
+
+\begin{document}
+	
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Content}
+  \tableofcontents
+\end{frame}
+
+
+\section{Adversarial example definitions}
+
+\begin{frame}{Non-robustness of machine learning algorithms}
+	\begin{itemize}
+		\item The performance of current state-of-the-art machine learning algorithms is \textbf{highly sensitive to input corruption, domain-shift, out-of-distribution inputs and inputs crafted to fool them} and they often make \textbf{overconfident predictions} \citep{Hendrycks:2016:BDMOODE,Ganin:2015:UDAB,Nguyen:2015:DNNEFHCPUI,Hendrycks:2019:BNNRCCP,Engstrom:2017:RTSFCST,Szegedy:2013:IPNN}.
+		\item Perhaps most surprisingly, an input (e.g. image) can be slightly (even imperceptibly) modified to cause a misprediction.
+		\begin{itemize}
+		    \item Performing a single small gradient descent step on an image in a direction of increasing the loss is often enough to fool a classifier \citep{Goodfellow:2014:EHAE}. 	
+		    \item Often, there even exists a perturbation that modifies a single pixel and causes misclassification \cite{Su:2017:OPAFDNN}. 	
+	    \end{itemize}
+	\end{itemize}
+	\begin{figure}[htbp!]
+	\centering
+	{\small
+		\begin{tabular}{>{\centering\arraybackslash}m{.22\columnwidth}m{.1in}>{\centering\arraybackslash}m{.22\columnwidth}m{.05in}>{\centering\arraybackslash}m{.22\columnwidth}}
+			\centering\arraybackslash
+			%abs max for panda was 138, eps was 1., so relative eps is ~.007
+			\includegraphics[width=.22\columnwidth]{adversarial-examples/panda_577.png} &%
+			\centering\arraybackslash%
+			$\centering +\ \epsilon \cdot$ &%
+			\includegraphics[width=.22\columnwidth]{adversarial-examples/nematode_082.png} &%
+			$\centering =$ & %
+			\includegraphics[width=.22\columnwidth]{adversarial-examples/gibbon_993.png} \\
+			$\centering \vec x$     &%
+			& $\sgn\del{\nabla_{\vec x} L(y,h(\vec x))}$ & & $\tilde{\vec x}$ \\
+			\emph{panda} (0.577) & & & & \emph{gibbon} (0.993) 
+		\end{tabular}
+	}
+	\caption{Generation of an adversarial example with FGSM, a single step attack. Italic words and numbers represent classes and confidences. The images are from \citet{Goodfellow:2014:EHAE}.}
+	\label{fig:fgsm-adversarial-example}
+\end{figure}
+\end{frame}
+
+
+\section{Adversarial examples}
+
+\begin{frame}{Adversarial examples}
+\begin{itemize}
+	\item The existence of adversarial examples indicates that current algorithms perform well without actually \textbf{understanding data} (in a way similar to humans).
+	\item 
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Properties of adversarial examples}
+\begin{itemize}
+    \item In the vicinity of an input, there are usually 
+\end{itemize}
+\end{frame}
+
+\note[itemize]{
+	\item\item 0:20 / 10:20
+}
+
+\end{document}
