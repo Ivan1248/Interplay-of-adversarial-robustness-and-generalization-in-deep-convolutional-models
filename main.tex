@@ -247,8 +247,8 @@ The described objectives, where it only matters that the adversarial example is 
 \end{align}
 where $y_\text{a}$ denotes the adversarial target label. The difference in equation \eqref{eq:targeted-loss-attack} is loss minimization and the adversarial target label instead of the true label. The difference in equation \eqref{eq:targeted-closest-attack} is the condition that the predicted labels equals the adversarial target instead of differing from the true label.
 
-non-targeted adversarial examples can also be generated without knowledge of the true label. Instead of the true label $y$, the predicted label $\hat{h}(\vec x)$ can be used in equations \eqref{eq:non-targeted-loss-attack} and \eqref{eq:non-targeted-closest-attack}. Such adversarial examples are called \textit{virtual adversarial examples}.
-\citet{Miyato:2017:VATRMSSSL} propose the following attack objective for use in semi-supervised learning:
+Non-targeted adversarial examples can also be generated without knowledge of the true label. Instead of the true label $y$, the predicted label $\hat{h}(\vec x)$ can be used in equations \eqref{eq:non-targeted-loss-attack} and \eqref{eq:non-targeted-closest-attack}. Such adversarial examples are called \textit{virtual adversarial examples}.
+\citet{Miyato:2017:VATRMSSSL,Kurakin:2016:AMLS} propose the following attack objective for use in semi-supervised learning:
 \begin{align}
     \tilde{\vec x} = \argmin_{\vec x'\in B_\epsilon(\vec x)} D((\rvar y\mid \vec x, \vec\theta), (\rvar y\mid \rvec x = \vec x', \vec\theta)) \text{,}
 \end{align}
@@ -269,7 +269,7 @@ Some commonly known gradient-based attacks for finding adversarial examples are 
 	\end{align} 
 	where $\epsilon$ is the $L^\infty$-norm of the perturbation. For $L^2$-constrined perturbations, \citet{Miyato:2017:VATRMSSSL} propose $L^2$ normalization instead of the sign function.
 	\item DeepFool -- an iterative non-targeted attack proposed by \citet{Moosavi-Dezfooli:2016:DFSAMFDNN} that in each step finds the optimal solution to a linear approximation of a loss in the $L^2$ ball $B_\epsilon(\vec x)$ using the gradient in the current adversarial input. It is faster and finds smaller perturbations than L-BFGS and stronger than FGSM.
-	\item Projected gradient descent (PGD) \citep{Madry:2017:TDLMRAA} basic iterative method (BIM) \citep{Kurakin:2016:AEPW} -- an iterative gradient-based algorithm with random initialization \citep{Madry:2017:TDLMRAA} of the perturbation from within the $B_\epsilon(\vec x)$ at the start and steps in the direction of the gradient sign:
+	\item Projected gradient descent (PGD) \citep{Madry:2017:TDLMRAA} or basic iterative method (BIM) \citep{Kurakin:2016:AEPW} -- an iterative gradient-based algorithm with random initialization \citep{Madry:2017:TDLMRAA} of the perturbation from within the $B_\epsilon(\vec x)$ at the start and steps in the direction of the gradient sign:
 	\begin{equation} \label{eq:pgd}
 	\tilde{\vec x}_i = \Pi_{B_\epsilon(\vec x)} \del{\tilde{\vec x}_{i-1} + \alpha\sgn\del{\nabla_{\tilde{\vec x}_{i-1}} L(y,h(\tilde{\vec x}_{i-1}))}} \text{.}
 	\end{equation}
@@ -280,7 +280,7 @@ Some commonly known gradient-based attacks for finding adversarial examples are 
 
 \section{Improving adversarial robustness}
 
-There are different approaches (\textit{defenses}) trying to improve adversarial robustness, most of which have been shown to actually be non-robust, but had appeared robust because they intentionally or unintentionally caused attacks that they were evaluated on not to be able to find adversarial examples \citep{Carlini:2017:AEANEDBTM,Athalye:2018:OGGFSS,Uesato:2018:ARDEAWA,Carlini:2017:TERNN}.  Thus, it is important to put as much effort as needed to correctly evaluate robustness, i.e. get an as low as possible upper bound on robustness. \citep{Carlini:2019:OEAR} is a recent helpful overview on evaluation of robustness. 
+There are different approaches (\textit{defenses}) trying to improve adversarial robustness, most of which have been shown to actually be non-robust, but had appeared robust because they intentionally or unintentionally caused attacks that they were evaluated on to be unable to find adversarial examples \citep{Carlini:2017:AEANEDBTM,Athalye:2018:OGGFSS,Uesato:2018:ARDEAWA,Carlini:2017:TERNN}. Thus, it is important to put as much effort as needed to correctly evaluate robustness, i.e. get an as low as possible upper bound on robustness. \citep{Carlini:2019:OEAR} is a recent helpful overview on evaluation of robustness. 
 
 A broad overview of many defenses can be found in \citet{Serban:2018:AECCP}. To give a few examples, some approaches use generative models to approximately project inputs to a learned data manifold (e.g. \citet{Samangouei:2018:DGPCAAAUGM}), some approaches are based on limiting the Lipschitz constant of the model to limit sensitivity to small input perturbations by regularization and model modification (e.g. \citet{Qian:2018:L2NNN}), some research is looking into ways of guaranteeing robustness (e.g. \citet{Cohen:2019:CARRS}).
 
