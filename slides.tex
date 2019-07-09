@@ -9,7 +9,7 @@
 % pdfpc slajdovi.pdf --notes=right
 \fi
 
-\usepackage[scaled]{beramono}				% sans-serif monospace
+%\usepackage[scaled]{beramono}				% sans-serif monospace
 
 %%text%%
 	\raggedright						% bez desnog poravnavanja
@@ -111,7 +111,7 @@
 \AtBeginSection[]
 {
 	\begin{frame}<beamer>
-		\frametitle{Content}
+		\frametitle{Outline}
 		\tableofcontents[currentsection]
 	\end{frame}
 }
@@ -244,7 +244,7 @@ Department of Electronics, Microelectronics, Computer and Intelligent Systems}
 
 \begin{frame}[allowframebreaks=0.9]{Properties of adversarial examples}
 \begin{itemize}
-	\item Adversarial examples are \textbf{close to clean inputs and rare}, i.e. hard to get by randomly sampling the $L^p$ neighbourhood \citep{Szegedy:2013:IPNN}.    
+	\item Adversarial examples are \textbf{close to clean inputs and rare}, i.e. hard to find by randomly sampling the $L^p$ neighbourhood \citep{Szegedy:2013:IPNN}.    
 	\item The neighbourhood of an input contains adversarial examples classified in different classes, i.e. an input is \textbf{close to many class boundaries} of the learned hypothesis.
     \item Knowing the locally \textbf{linear} behaviour of the hypothesis is often enough to generate an adversarial example \citep{Goodfellow:2014:EHAE}.
     \item Adversarial examples \textbf{generalize across algorithms and datasets}, i.e. an adversarial example of one model is often also an adversarial example of some other trained model \citep{Szegedy:2013:IPNN,Papernot:2016:TMLPBBAAS,Liu:2016:DTAEBBA,Tramer:2017:STAE}.
@@ -255,7 +255,7 @@ Department of Electronics, Microelectronics, Computer and Intelligent Systems}
 \begin{frame}[allowframebreaks=0.9]{Properties of adversarial examples}
 \begin{itemize}
     \item \citet{Tanay:2016:ABTPPAE} hypothesize that adversarial examples might be occurring along \textbf{low-variance directions of the data} and that robustness could be improved with regularization.
-    \item \citet{Gilmer:2018:AS} hypothesize that the existence of adversarial examples could be a naturally occurring result of the geometry of high-dimensional data manifolds.
+    \item \citet{Gilmer:2018:AS} hypothesize that the existence of adversarial examples could be a naturally occurring result of the \textbf{geometry of high-dimensional data manifolds}.
     \item \citet{Tsipras:2018:RMBOA,Ilyas:2019:AENBTF} hypothesize that adversarial examples exist because classifiers rely on \textbf{highly predictive but brittle (nonrobust) features}. \citet{Ilyas:2019:AENBTF} provide good evidence.
 \end{itemize}
 \end{frame}
@@ -313,23 +313,24 @@ Department of Electronics, Microelectronics, Computer and Intelligent Systems}
 \section{Attacks and defenses}
 
 \begin{frame}[allowframebreaks=0.9]{Finding adversarial examples}
-	\begin{itemize}
-		\item Let $\set X$ be the input space,
-		and $d\in(\set X\times\set X\to \R^+)$ a \textbf{distance function}. The \textbf{neighbourhood} of an example $\vec x$ can be $B_{\epsilon}(\vec x) = \cbr{\vec x'\colon d(\vec x', \vec x) \leq \epsilon}$,
-		where $\epsilon$ is the maximum distance.
-		
-		\item Ideally, the neighbourhood of an example $\vec x$ should be the set of \textbf{perceptually similar} examples that all belong to the same class as $\vec x$, but it requires knowing the true hypothesis.
-		\item A common choice for distance $d$ is $L^p$ distance with $p\in\cbr{1,2,\infty}$. 
+\begin{itemize}
+	\item Let $\set X$ be the input space,
+	and $d\in(\set X\times\set X\to \R^+)$ a \textbf{distance function}. The \textbf{neighbourhood} of an example $\vec x$ can be $B_{\epsilon}(\vec x) = \cbr{\vec x'\colon d(\vec x', \vec x) \leq \epsilon}$,
+	where $\epsilon$ is the maximum distance.
+	
+	\item Ideally, the neighbourhood of an example $\vec x$ should be the set of \textbf{perceptually similar} examples that all belong to the same class as $\vec x$, but it requires knowing the true hypothesis.
+	\item A common choice for distance $d$ is $L^p$ distance with $p\in\cbr{1,2,\infty}$.
+	
 	\item Finding an adversarial example can be defined as a constrained optimization problem of \textbf{maximizing some loss with respect to the input} with a constraint of a neighbourhood $B_\epsilon(\vec x)$:
 	\begin{align}
 	\tilde{\vec x} = \argmax_{\vec x'\in B_\epsilon(\vec x)} L(y, h(\vec x')) \text{,} \label{eq:non-targeted-loss-attack}
 	\end{align}
 	where $y$ is the true label, $h$ the hypothesis, and $L$ the loss function. 
-	\item Let $\hat{h}(\vec x) \coloneqq \argmax_{y} h(\vec x)_\ind{y}$.
-	An objective can also be to find the $\tilde{\vec x}$ \textbf{closest adversarial example} \citep{Moosavi-Dezfooli:2016:DFSAMFDNN}:
+	\item An objective can also be to find \textbf{the closest adversarial example} \citep{Moosavi-Dezfooli:2016:DFSAMFDNN}:
 	\begin{align}
-	\tilde{\vec x} = \argmin_{\vec x'\colon \vec x'\in B_\epsilon(\vec x) \land \hat{h}(\vec x') \neq y} d(\vec x', \vec x) \text{.} \label{eq:non-targeted-closest-attack}
+	\tilde{\vec x} = \argmin_{\vec x'\colon \vec x'\in B_\epsilon(\vec x) \land \hat{h}(\vec x') \neq y} d(\vec x', \vec x) \text{,} \label{eq:non-targeted-closest-attack}
 	\end{align}
+	where $\hat{h}(\vec x) \coloneqq \argmax_{y} h(\vec x)_\ind{y}$.
 	\item There are also \textbf{targeted attacks}, where the objective is to get an adversarial example that is classified to some target class. Targeted attack objectives corresponding to equations \eqref{eq:non-targeted-loss-attack} and \eqref{eq:non-targeted-closest-attack} are:
 	\begin{align}
 	\tilde{\vec x} &= \argmin_{\vec x'\in B_\epsilon(\vec x)} L(y_\text{a}, h(\vec x')) \text{,} \label{eq:targeted-loss-attack} \\
@@ -338,10 +339,11 @@ Department of Electronics, Microelectronics, Computer and Intelligent Systems}
 	where $y_\text{a}$ denotes the adversarial target label. 
 \end{itemize}
 \end{frame}
+\note[itemize]{\item\item 1:20 / 13:20}
 
 \begin{frame}[allowframebreaks=0.9]{Finding adversarial examples}
 \begin{itemize}
-	\item Non-targeted adversarial examples can also be generated by using the prediction instead of the true label. Such adversarial examples are called \textbf{virtual adversarial examples}.	
+	\item Non-targeted adversarial examples can also be generated by using the prediction instead of the true label in the loss, resulting in \textbf{virtual adversarial examples}.	
 	\item \citet{Miyato:2017:VATRMSSSL,Kurakin:2016:AMLS} propose the following attack objective for use in semi-supervised learning:
 	\begin{align}
 	\tilde{\vec x} = \argmin_{\vec x'\in B_\epsilon(\vec x)} D((\rvar y\mid \vec x, \vec\theta), (\rvar y\mid \rvec x = \vec x', \vec\theta)) \text{,}
@@ -349,6 +351,7 @@ Department of Electronics, Microelectronics, Computer and Intelligent Systems}
 	where $D$ is some distribution distance function.
 \end{itemize}
 \end{frame}
+\note[itemize]{\item\item 1:20 / 13:20}
 
 \begin{frame}[allowframebreaks=0.9]{Common attacks}
 	\begin{itemize}
@@ -365,7 +368,7 @@ Department of Electronics, Microelectronics, Computer and Intelligent Systems}
 			\begin{equation} \label{eq:pgd}
 			\tilde{\vec x}_i = \Pi_{B_\epsilon(\vec x)} \del{\tilde{\vec x}_{i-1} + \alpha\sgn\del{\nabla_{\tilde{\vec x}_{i-1}} L(y,h(\tilde{\vec x}_{i-1}))}} \text{.}
 			\end{equation}
-			$\alpha$ is the step size, and $\Pi_{B_\epsilon(\vec x)}$ is the projection into the $L^p$ $\epsilon$-ball around $\vec x$.
+			$\alpha$ is the step size, $\Pi_{B_\epsilon(\vec x)}$ is the projection into the $L^p$ $\epsilon$-ball around $\vec x$.
 			\item Carlini-Wagner (CW) attacks -- \citet{Carlini:2017:TERNN} propose attacks with similar minimal perturbation objectives as \citet{Szegedy:2013:IPNN} 
 			%and \citet{Moosavi-Dezfooli:2016:DFSAMFDNN}
 			. They modify the loss and they introduce change of variables $\vec\delta=\frac{1}{2}\del{\tanh\del{\vec w} + \cvec 1} - \vec x$ to limit the perturbation $\vec\delta$ to $\intcc{0,1}$. 
@@ -376,24 +379,24 @@ Department of Electronics, Microelectronics, Computer and Intelligent Systems}
 
 \begin{frame}[allowframebreaks=0.9]{Improving adversarial robustness}
 	\begin{itemize}
-		\item There are different defenses, most of which have been shown to actually be nonrobust, but had appeared robust because of deficiencies in robustness evaluation  \citep{Carlini:2017:AEANEDBTM,Athalye:2018:OGGFSS,Uesato:2018:ARDEAWA,Carlini:2017:TERNN}.
-		\item Some approaches use generative models to approximately project inputs to a learned data manifold (e.g. \citet{Samangouei:2018:DGPCAAAUGM}), some are based on limiting the Lipschitz constant of the model to limit sensitivity to small input perturbations by regularization and model modification (e.g. \citet{Qian:2018:L2NNN}), some research is looking into ways of guaranteeing robustness (e.g. \citet{Cohen:2019:CARRS}).
+		\item There are different defenses, most of which have been shown to be nonrobust, but had appeared robust because of deficiencies in robustness evaluation  \citep{Carlini:2017:AEANEDBTM,Athalye:2018:OGGFSS,Uesato:2018:ARDEAWA,Carlini:2017:TERNN}.
+		\item Some approaches use \textbf{generative models} to approximately \textbf{project inputs to a learned data manifold} (e.g. \citet{Samangouei:2018:DGPCAAAUGM})
+		\item Some are based on \textbf{limiting the Lipschitz constant} of the model to limit sensitivity to small input perturbations by regularization and model modification (e.g. \citet{Qian:2018:L2NNN}), some research is looking into ways of \textbf{guaranteeing robustness} (e.g. \citet{Cohen:2019:CARRS}).
+		\item The defense currently believed to be most effective according to \citet{Athalye:2018:OGGFSS} is \textbf{adversarial training} \citep{Goodfellow:2014:EHAE} with a strong iterative attack \citep{Madry:2017:TDLMRAA}.
 	\end{itemize}
 \end{frame}
 
 \begin{frame}[allowframebreaks=0.9]{Adversarial training and empirical
 		adversarial risk}
-	\begin{itemize}
-		\item The only defense currently believed to be effective according to \citet{Athalye:2018:OGGFSS} is adversarial training \citep{Goodfellow:2014:EHAE} with a strong attack \citep{Madry:2017:TDLMRAA}.
-		
+	\begin{itemize}	
 		\item \citet{Madry:2017:TDLMRAA} define what can be called \textbf{empirical adversarial risk} by allowing the worst-case attack to modify each input:
 		\begin{align}
 		R_\text{EA}(h,\set D) \coloneqq \E_{(\vec x, y)\sim p_{\set D}} \del{\max_{\tilde{\vec x}\in B_\epsilon(\vec x)} L(y,h(\tilde{\vec x}))} \text{.}
 		\end{align}
-		\item They propose PGD for the attack during training and PGD with as large a number of iterations as necessary to approximate the worst-case adversary and get a better upper bound on robustness.
+		\item They propose PGD for the attack during training and PGD with many iterations to get a better upper bound on robustness.
 		
-		\item Still, adversarially trained models are not robust to stronger attacks than those used for training \citep{Schott:2018:TDFARNNMM}. 
-		\item Furthermore, because adversarial examples are generated and robustness is evaluated according to the practical definition of an adversarial example and using $L^p$ distance, performance is affected \citep{Madry:2017:TDLMRAA,Tsipras:2018:RMBOA} and there can exist misclassified examples among which are \textbf{invariance-based} adversarial examples \citep{Jacobsen:2019:EEICNBAR}.
+		\item Adversarially trained models are \textbf{not robust to stronger attacks} than those used for training \citep{Schott:2018:TDFARNNMM}. 
+		Because of generating adversarial examples using non-ideal $L^p$ distance, \textbf{performance is affected} \citep{Madry:2017:TDLMRAA,Tsipras:2018:RMBOA} and there can exist \textbf{invariance-based adversarial examples} \citep{Jacobsen:2019:EEICNBAR}.
 	\end{itemize}
 \end{frame}
 
@@ -427,14 +430,18 @@ Department of Electronics, Microelectronics, Computer and Intelligent Systems}
 		%\item Based on some ideas from \citet{Tsipras:2018:RMBOA},  \citet{Ilyas:2019:AENBTF} propose an interesting and experimentally well supported hypothesis on properties features that well-generalizing nonrobust classifiers learn. 
 		%\item They show that existence of adversarial examples can be directly attributed to existence of \textbf{nonrobust features}, "features derived from patterns in the data that are \textbf{highly predictive} but \textbf{brittle and incomprehensible to humans}"
 		\item \citet{Ilyas:2019:AENBTF} give good experimental support for the hypothesis on reliance on highly-predictive nonrobust features.
-		\item \citet{Ilyas:2019:AENBTF} demonstrate the predictiveness of nonrobust features by: 
+		\item In one experiment, they
 		\begin{enumerate}
-			\item constructing a dataset $\set D_\text{NR}$ where the only \textbf{useful features are nonrobust features} by generating \textbf{adversarial examples} for a standardly trained classifier and \textbf{relabeling} them with target labels,
-			\item \textbf{training a new classifier on the nonrobust dataset} $\set D_\text{NR}$,
-			\item testing the new classifier on the original test set, where it achieves \textbf{performance close to the original classifier} and lower robustness.
+			\item construct a training set $\set D_\text{NR}$ where the only \textbf{useful features are nonrobust features} by generating \textbf{adversarial examples} for a standardly trained classifier and \textbf{relabeling} them with target labels,
+			\item \textbf{train a new classifier on the nonrobust dataset} $\set D_\text{NR}$,
+			\item test the new classifier on the original test set, where it achieves \textbf{performance close to the original classifier} and \textbf{lower robustness}.
+		\end{enumerate}		
+		\item In another experiment, they
+		\begin{enumerate}
+			\item construct a training set $\set D_\text{R}$ with removed \textbf{nonrobust features} using a robust classifier,
+			\item \textbf{train a new classifier on the robust dataset} $\set D_\text{R}$,
+			\item test the new classifier on the original test set, where it achieves a bit \textbf{lower performance} and \textbf{significantly higher robustness}.
 		\end{enumerate}
-		
-		\item In another experiment, they try to \textbf{remove nonrobust features} from inputs with the help of an adversarially trained classifier. A new classifier trained on the dataset with removed nonrobust features achieves a bit \textbf{lower performance} and significantly higher robustness compared to the standardly trained classifier.
 		%\item Results of these experiments with the CIFAR-10 dataset \citep{Krizhevsky:2009:LMLFTI} are shown in figure \ref{fig:iliyas-experiment-results}.
 	\end{itemize}
 	\begin{figure}
