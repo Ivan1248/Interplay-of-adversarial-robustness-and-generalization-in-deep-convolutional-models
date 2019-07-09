@@ -145,12 +145,13 @@ Department of Electronics, Microelectronics, Computer and Intelligent Systems}
 
 \begin{frame}[allowframebreaks=0.9]{Nonrobustness of machine learning algorithms}
 	\begin{itemize}
-		\item Current state-of-the-art machine learning algorithms do not work well with \textbf{domain-shift, corrupted, out-of-distribution and inputs crafted to fool them} and they often make \textbf{overconfident predictions} \citep{Hendrycks:2016:BDMOODE,Ganin:2015:UDAB,Nguyen:2015:DNNEFHCPUI,Hendrycks:2019:BNNRCCP,Engstrom:2017:RTSFCST,Szegedy:2013:IPNN}.
-		\item Perhaps most surprisingly, an input (e.g. image) can be slightly (even imperceptibly) modified to generate an adversarial example and cause a misprediction.
-		\item This is not limited to deep models		
+		\item Current state-of-the-art machine learning algorithms do not work well with \textbf{domain-shifted, out-of-distribution and inputs crafted to fool them} and they often make \textbf{overconfident predictions} \citep{Hendrycks:2016:BDMOODE,Ganin:2015:UDAB,Nguyen:2015:DNNEFHCPUI,Hendrycks:2019:BNNRCCP,Engstrom:2017:RTSFCST,Szegedy:2013:IPNN}.
+		\item It is even possible to slightly, even impreceptibly, modify an input (e.g. image) to generate an adversarial example and cause a misprediction.
+		\item This is not limited to complex deep models		
 		\item This indicates that current algorithms \textbf{perform well without actually understanding data} (in a way similar to humans).
 	\end{itemize}
 \end{frame}
+\note[itemize]{\item\item 0:40 / 0:40}
 
 \begin{frame}[allowframebreaks=0.9]{Nonrobustness of machine learning algorithms}
 	\begin{itemize}
@@ -178,14 +179,16 @@ Department of Electronics, Microelectronics, Computer and Intelligent Systems}
 	\label{fig:fgsm-adversarial-example}
 	\end{figure}
 \end{frame}
+\note[itemize]{\item\item 0:20 / 1:00}
 
 \begin{frame}{Adversarial robustness and generalization}
 	\begin{itemize}
 		\item Evidence suggests that there is a \textbf{trade-off between robustness and generalization} with current algorithms \citep{Tsipras:2018:RMBOA,Madry:2017:TDLMRAA,Su:2018:IRTCOACSRDICM}.
-		\item The trade-off is \textbf{counter-intuitive} because \textbf{a hypothesis which optimally generalizes would have no adversarial examples} (and we know that an optimal hypothesis exists given a data distribution).
-		\item The question remains whether it is achievable with respect to computation or amount of data to implement such algorithms.
+		\item The trade-off is \textbf{counter-intuitive} because \textbf{a hypothesis which optimally generalizes would have no adversarial examples} (and an optimal hypothesis exists given a data distribution).
+		\item The question remains whether it is achievable regarding computational and data limitations to implement such algorithms.
 	\end{itemize}
 \end{frame}
+\note[itemize]{\item\item 0:40 / 1:40}
 
 \section{Adversarial example definitions}
 
@@ -195,6 +198,7 @@ Department of Electronics, Microelectronics, Computer and Intelligent Systems}
 		\item Some broader definitions also consider \textbf{out-of-distribution} examples \citep{Gal:2018:SCIMHNAETESBNN} or \textbf{any} inputs that fools the hypothesis \citep{Brown:2018:UAE}, but those will be not considered.
 	\end{itemize}
 \end{subframe}
+% subframe
 
 \begin{frame}[allowframebreaks=0.9]{Adversarial example definitions}
 	\begin{definition}[practical adversarial example] \label{def:ae-practical}
@@ -212,6 +216,7 @@ Department of Electronics, Microelectronics, Computer and Intelligent Systems}
 	\end{enumerate}
 \end{definition}
 \end{frame}
+\note[itemize]{\item\item 2:00 / 4:20}
 
 \begin{frame}[allowframebreaks=0.9]{Adversarial example definitions}
 	\begin{itemize}
@@ -233,6 +238,7 @@ Department of Electronics, Microelectronics, Computer and Intelligent Systems}
 	\end{itemize}
 \end{itemize}
 \end{frame}
+\note[itemize]{\item\item 3:00 / 7:20}
 
 \section{Properties of adversarial examples}
 
@@ -242,11 +248,18 @@ Department of Electronics, Microelectronics, Computer and Intelligent Systems}
 	\item The neighbourhood of an input contains adversarial examples classified in different classes, i.e. an input is \textbf{close to many class boundaries} of the learned hypothesis.
     \item Knowing the locally \textbf{linear} behaviour of the hypothesis is often enough to generate an adversarial example \citep{Goodfellow:2014:EHAE}.
     \item Adversarial examples \textbf{generalize across algorithms and datasets}, i.e. an adversarial example of one model is often also an adversarial example of some other trained model \citep{Szegedy:2013:IPNN,Papernot:2016:TMLPBBAAS,Liu:2016:DTAEBBA,Tramer:2017:STAE}.
+\end{itemize}
+\end{frame}
+\note[itemize]{\item\item 0:40 / 9:00}
+
+\begin{frame}[allowframebreaks=0.9]{Properties of adversarial examples}
+\begin{itemize}
     \item \citet{Tanay:2016:ABTPPAE} hypothesize that adversarial examples might be occurring along \textbf{low-variance directions of the data} and that robustness could be improved with regularization.
     \item \citet{Gilmer:2018:AS} hypothesize that the existence of adversarial examples could be a naturally occurring result of the geometry of high-dimensional data manifolds.
     \item \citet{Tsipras:2018:RMBOA,Ilyas:2019:AENBTF} hypothesize that adversarial examples exist because classifiers rely on \textbf{highly predictive but brittle (nonrobust) features}. \citet{Ilyas:2019:AENBTF} provide good evidence.
 \end{itemize}
 \end{frame}
+\note[itemize]{\item\item 1:00 / 10:00}
 
 \begin{frame}[allowframebreaks=0.9]{Properties of adversarial examples}
 \begin{itemize}
@@ -262,6 +275,7 @@ Department of Electronics, Microelectronics, Computer and Intelligent Systems}
 	\label{fig:vae-gan-targetad-face}
 \end{figure}
 \end{frame}
+\note[itemize]{\item\item 0:30 / 10:30}
 
 \begin{frame}[allowframebreaks=0.9]{Properties of adversarial examples}
 \begin{itemize}
@@ -279,7 +293,7 @@ Department of Electronics, Microelectronics, Computer and Intelligent Systems}
 	\begin{center}
 		\includegraphics[width=\textwidth]{figures/adversarial-examples/rony/cifar10_cherry_picked}
 	\end{center}
-	\caption{Cherry-picked clean images (top) and adversarial examples (bottom) generated using an iterative $L^2$-bounded attack on a CIFAR-10 classifier. The predicted classes for the bottom row are \textit{ship},\textit{deer},\textit{truck},\textit{horse},\textit{dog},\textit{cat},\textit{cat}. Adapted from \cite{Rony:2018:DDNEGBLAAD}.}
+	\caption{Cherry-picked clean images (top) and adversarial examples (bottom) generated using an iterative $L^2$-bounded attack on a CIFAR-10 classifier. The predicted classes for the bottom row are \textit{ship},\textit{deer},\textit{truck},\textit{horse},\textit{dog},\textit{cat},\textit{cat}. Adapted from \citep{Rony:2018:DDNEGBLAAD}.}
 	\label{fig:rony-cifar10-cherry-picked}
 \end{figure}
 
@@ -293,6 +307,8 @@ Department of Electronics, Microelectronics, Computer and Intelligent Systems}
 	\label{fig:li-gfz-adversarial-examples-mnist}
 \end{figure}
 \end{frame}
+\note[itemize]{\item\item 1:30 / 12:00}
+
 
 \section{Attacks and defenses}
 
@@ -408,15 +424,18 @@ Department of Electronics, Microelectronics, Computer and Intelligent Systems}
 
 \begin{frame}[allowframebreaks=0.9]{Nonrobust features}
 	\begin{itemize}
-		\item Based on some ideas from \citet{Tsipras:2018:RMBOA},  \citet{Ilyas:2019:AENBTF} propose an interesting and experimentally well supported hypothesis on properties features that well-generalizing nonrobust classifiers learn. \item They show that existence of adversarial examples can be directly attributed to existence of \textbf{nonrobust features}, "features derived from patterns in the data that are \textbf{highly predictive} but \textbf{brittle and incomprehensible to humans}".	
-		\item They demonstrate the predictiveness of nonrobust features by: 
+		%\item Based on some ideas from \citet{Tsipras:2018:RMBOA},  \citet{Ilyas:2019:AENBTF} propose an interesting and experimentally well supported hypothesis on properties features that well-generalizing nonrobust classifiers learn. 
+		%\item They show that existence of adversarial examples can be directly attributed to existence of \textbf{nonrobust features}, "features derived from patterns in the data that are \textbf{highly predictive} but \textbf{brittle and incomprehensible to humans}"
+		\item \citet{Ilyas:2019:AENBTF} give good experimental support for the hypothesis on reliance on highly-predictive nonrobust features.
+		\item \citet{Ilyas:2019:AENBTF} demonstrate the predictiveness of nonrobust features by: 
 		\begin{enumerate}
-			\item constructing a dataset $\set D_\text{NR}$ where approximately the only \textbf{useful features are nonrobust features} by turning inputs of the original dataset $\set D$ into \textbf{adversarial examples} for a classifier that was trained standardly and \textbf{relabeling} them with the adversarial label,
+			\item constructing a dataset $\set D_\text{NR}$ where the only \textbf{useful features are nonrobust features} by generating \textbf{adversarial examples} for a standardly trained classifier and \textbf{relabeling} them with target labels,
 			\item \textbf{training a new classifier on the nonrobust dataset} $\set D_\text{NR}$,
 			\item testing the new classifier on the original test set, where it achieves \textbf{performance close to the original classifier} and lower robustness.
 		\end{enumerate}
 		
-		\item In another experiment, they try to \textbf{remove nonrobust features} from inputs with the help of an adversarially trained classifier. A new classifier trained on the dataset with removed nonrobust features achieves a bit \textbf{lower performance} and significantly higher robustness compared to the standardly trained classifier. Results of these experiments with the CIFAR-10 dataset \citep{Krizhevsky:2009:LMLFTI} are shown in figure \ref{fig:iliyas-experiment-results}.
+		\item In another experiment, they try to \textbf{remove nonrobust features} from inputs with the help of an adversarially trained classifier. A new classifier trained on the dataset with removed nonrobust features achieves a bit \textbf{lower performance} and significantly higher robustness compared to the standardly trained classifier.
+		%\item Results of these experiments with the CIFAR-10 dataset \citep{Krizhevsky:2009:LMLFTI} are shown in figure \ref{fig:iliyas-experiment-results}.
 	\end{itemize}
 	\begin{figure}
 		\centering
@@ -458,13 +477,13 @@ Department of Electronics, Microelectronics, Computer and Intelligent Systems}
 		\item Experiments with a synthetic dataset with known class-invariant transformations and datasets with small images support the hypothesis that generalization can be improved with adversarial training with on-manifold adversarial examples.
 	\end{itemize}
 
-		\begin{figure}[htbp!]
-			\begin{center}
-				\includegraphics[width=\columnwidth]{figures/adversarial-examples/stutz-introduction_b.pdf}
-			\end{center}
-			\caption{An illustration by \citet{Stutz:2018:DARG} of class manifolds (classes "5" and "6") with a regular (off-manifold) adversarial example and an on-manifold adversarial example.}
-			\label{fig:stutz-illustration}
-		\end{figure}
+	\begin{figure}[htbp!]
+		\begin{center}
+			\includegraphics[width=\columnwidth]{figures/adversarial-examples/stutz-introduction_b.pdf}
+		\end{center}
+		\caption{An illustration by \citet{Stutz:2018:DARG} of class manifolds (classes "5" and "6") with a regular (off-manifold) adversarial example and an on-manifold adversarial example.}
+		\label{fig:stutz-illustration}
+	\end{figure}
 	\begin{itemize}
 		\item In one of the experiments \citet{Stutz:2018:DARG} construct a synthetic dataset with a known manifold (geometric transformations of letters) in order to be able to generate exactly on-manifold adversarial examples by modifying parameters of the geometric transformations. With this dataset, they succeed in improving generalization and on-manifold robustness\footnote[frame]{By the authors' definition of an adversarial example, which is similar to the consistent definition (definition \ref{def:ae-consistent}), except for that there is no closeness constraint, making it equivalent to the definition of a misclassified example, on-manifold robustness essentially boils down to generalization.} with adversarial training.
 		
