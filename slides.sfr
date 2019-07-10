@@ -1,5 +1,5 @@
 \bsfrestoresection{0}{3}
-\bsfrestoresection{1}{7}
+\bsfrestoresection{1}{8}
 \bsfrestore{0}{2}{0}{1}
 \begin{frame}[allowframebreaks=0.9]{Adversarial example definitions}
 \begin{itemize}
@@ -8,9 +8,10 @@
 \end{itemize}
 \end{frame}
 
-\bsfrestoresection{2}{10}
-\bsfrestoresection{3}{18}
-\bsfrestore{0}{4}{0}{6}
+\bsfrestoresection{2}{11}
+\bsfrestoresection{3}{17}
+\bsfrestoresection{4}{24}
+\bsfrestore{0}{5}{0}{3}
 \begin{frame}[allowframebreaks=0.9]{Robustness evaluation}
 \begin{itemize}
 \item For adversarial training with weaker attacks, non-targeted attacks should be preferred due to \textbf{label leaking} \citep{Kurakin:2016:AMLS} where the learned classifier can overfit to adversarial examples and perform better on them than on natural examples, especially with attacks with a small number of iterations.
@@ -18,8 +19,8 @@
 \end{itemize}
 \end{frame}
 
-\bsfrestoresection{4}{26}
-\bsfrestoresection{5}{34}
-\bsfrestoresection{6}{36}
+\bsfrestoresection{5}{27}
+\bsfrestoresection{6}{34}
+\bsfrestoresection{7}{36}
 \bsfrestorepart{0}{43}
 \endinput
